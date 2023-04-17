@@ -1,0 +1,10 @@
+{
+
+  "naredbe": [
+    "SELECT",
+    "UPDATE",
+    "INSERT INTO",
+    "FROM",
+    "WHERE"
+  ]
+}
