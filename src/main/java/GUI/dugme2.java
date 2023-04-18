@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class dugme2 extends JButton implements ActionListener {
-
     public dugme2(String tekst) {
         super(tekst);
         addActionListener(this::actionPerformed);
@@ -15,8 +14,8 @@ public class dugme2 extends JButton implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==this) {
-            proveraTeksta pt=new proveraTeksta();
-            pt.proveriUnetiTekst(MyFrame.getTextPane());
+            MyFrame mf = MyFrame.getInstance();
+            System.out.println(mf.tekstIzTekstPanela());
         }
     }
 }
