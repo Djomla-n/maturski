@@ -1,4 +1,4 @@
-package GUI.Tree;
+package gui.tree;
 
 public class stablo {
 }

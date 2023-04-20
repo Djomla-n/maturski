@@ -1,16 +1,22 @@
-package GUI;
+package gui;
+import gui.controller.dugme1;
+import gui.controller.dugme2;
+import gui.controller.dugme3;
+
 import javax.swing.*;
 import java.awt.*;
 
 
 public class MyFrame extends JFrame{
     private JTextPane tekstPanel;
-    private JPanel goreDesno,dugmiciPanel,desniPanel;
+    private JPanel goreDesno;
+    private JPanel dugmiciPanel;
+    private JPanel desniPanel;
     private JSplitPane tekstIDugmici;
     private JTable tabelaPanel;
-    private dugme1 dugme1;
-    private dugme2 dugme2;
-    private dugme3 dugme3;
+    private gui.controller.dugme1 dugme1;
+    private gui.controller.dugme2 dugme2;
+    private gui.controller.dugme3 dugme3;
 
     public MyFrame() {
             //panel za stablo

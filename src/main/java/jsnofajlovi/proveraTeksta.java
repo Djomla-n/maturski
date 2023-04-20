@@ -1,11 +1,9 @@
-package JsonFajlovi;
+package jsnofajlovi;
 
-import GUI.MyFrame;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
