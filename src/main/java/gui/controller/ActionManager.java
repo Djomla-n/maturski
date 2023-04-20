@@ -4,11 +4,11 @@ import lombok.Getter;
 
 import javax.swing.*;
 public class ActionManager {
-    private JButton run;
-    public ActionManager(){
-
-    }
-   //public JButton getRunAction(){
-
-   // }
+        private oboj oboj;
+        public ActionManager(){
+            pokreniAkciju();
+        }
+        public void pokreniAkciju(){
+            oboj= new oboj();
+        }
 }
