@@ -1,5 +1,6 @@
 package gui.controller;
 
+import gui.view.MyFrame;
 import lombok.Getter;
 
 import javax.swing.*;
@@ -12,7 +13,8 @@ public class RunAction extends AbstractMaturskiAction{
         putValue(NAME, "run");
     }
     public void actionPerformed(ActionEvent e){
-            System.out.println("cao");
+
+
     }
 
 

@@ -3,23 +3,25 @@ import gui.controller.ActionManager;
 import gui.controller.ExportAction;
 import gui.controller.PrettyAction;
 import gui.controller.RunAction;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
-
+@Getter
 
 public class MyFrame extends JFrame{
-    private JTextPane tekstPanel;
-    private JPanel stabloPanel;
-    private JPanel goreDesno;
-    private JPanel dugmiciPanel;
-    private JPanel desniPanel;
-    private JSplitPane tekstIDugmici;
-    private JTable tabelaPanel;
-    private JButton export;
-    private JButton run;
-    private JButton pretty;
-    private ActionManager actionManager;
+    private static JTextPane tekstPanel;
+    private static JPanel stabloPanel;
+    private static JPanel goreDesno;
+    private static JPanel dugmiciPanel;
+    private static JPanel desniPanel;
+    private static JSplitPane tekstIDugmici;
+    private static JTable tabelaPanel;
+    private static JButton export;
+    private static JButton run;
+    private static JButton pretty;
+    private static ActionManager actionManager;
+
 
     public void pokreniGUI(){
         //panel za stablo
@@ -86,11 +88,19 @@ public class MyFrame extends JFrame{
         actionManager=new ActionManager();
         pokreniGUI();
     }
-
-    public String tekstIzTekstPanela() {
-        return tekstPanel.getText();
+    public void updateTextPane(String s) {
+        tekstPanel.setText(s);
+        revalidate();
+        repaint();
     }
 
+    public static JTextPane getTekstPanel() {
+        return tekstPanel;
+    }
+
+    public static void setTekstPanel(JTextPane tekstPanel) {
+        MyFrame.tekstPanel = tekstPanel;
+    }
     //singletone
 
     private static MyFrame instance=null;
