@@ -2,13 +2,15 @@ package gui.controller;
 
 import lombok.Getter;
 
-import javax.swing.*;
+
+@Getter
 public class ActionManager {
-        private oboj oboj;
+        private RunAction runAction;
+        private PrettyAction prettyAction;
+        private ExportAction exportAction;
         public ActionManager(){
-            pokreniAkciju();
-        }
-        public void pokreniAkciju(){
-            oboj= new oboj();
+            runAction = new RunAction();
+            prettyAction = new PrettyAction();
+            exportAction = new ExportAction();
         }
 }

@@ -1,8 +1,8 @@
 package gui.view;
 import gui.controller.ActionManager;
-import gui.controller.dugme1;
-import gui.controller.oboj;
-import gui.controller.dugme3;
+import gui.controller.ExportAction;
+import gui.controller.PrettyAction;
+import gui.controller.RunAction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,23 +10,20 @@ import java.awt.*;
 
 public class MyFrame extends JFrame{
     private JTextPane tekstPanel;
+    private JPanel stabloPanel;
     private JPanel goreDesno;
     private JPanel dugmiciPanel;
     private JPanel desniPanel;
     private JSplitPane tekstIDugmici;
     private JTable tabelaPanel;
-    private gui.controller.dugme1 dugme1;
-    private oboj oboj;
-    private gui.controller.dugme3 dugme3;
+    private JButton export;
+    private JButton run;
+    private JButton pretty;
     private ActionManager actionManager;
 
-    public void izvrsi(){
-        actionManager=new ActionManager();
-        pokreniGUI();
-    }
     public void pokreniGUI(){
         //panel za stablo
-        JPanel stabloPanel = new JPanel();
+        stabloPanel = new JPanel();
         stabloPanel.setBackground(Color.blue);
         stabloPanel.setPreferredSize(new Dimension(150, 100));
 
@@ -36,20 +33,24 @@ public class MyFrame extends JFrame{
         tekstPanel.setPreferredSize(new Dimension(450, 250));
         tekstPanel.add(Box.createHorizontalGlue());
 
-        dugme1=new dugme1("dugme1");
-        dugme1.setFocusable(false);
-        oboj =new oboj();
-        dugme3=new dugme3("dugme3");
-        dugme3.setFocusable(false);
-
+        run=new JButton("run");
+        run.addActionListener(actionManager.getRunAction());
+        run.setFocusable(false);
+        pretty=new JButton("pretty");
+        pretty.setFocusable(false);
+        pretty.addActionListener(actionManager.getPrettyAction());
+        export=new JButton("export");
+        export.setFocusable(false);
+        export.addActionListener(actionManager.getExportAction());
 
         //panel za dugmice
         dugmiciPanel = new JPanel();
         dugmiciPanel.setBackground(Color.red);
         dugmiciPanel.setLayout(new GridLayout(3,1,10,10));
         dugmiciPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
-        dugmiciPanel.add(dugme1);
-        dugmiciPanel.add(dugme3);
+        dugmiciPanel.add(run);
+        dugmiciPanel.add(pretty);
+        dugmiciPanel.add(export);
         dugmiciPanel.setPreferredSize(new Dimension(100, 50));
 
         // panel koji spaja dugmice i tekst
@@ -82,7 +83,8 @@ public class MyFrame extends JFrame{
         this.setVisible(true);
     }
     public MyFrame() {
-
+        actionManager=new ActionManager();
+        pokreniGUI();
     }
 
     public String tekstIzTekstPanela() {

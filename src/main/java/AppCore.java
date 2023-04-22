@@ -8,5 +8,6 @@ public class AppCore{
         ApplicationFramework appCore= ApplicationFramework.getInstance();
         Gui gui= new SwingGui();
         appCore.izvrsi(gui);
+        appCore.run();
     }
 }
