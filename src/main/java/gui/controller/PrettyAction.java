@@ -10,28 +10,33 @@ public class PrettyAction extends AbstractMaturskiAction{
     private static String[] nizReciNorm;
     private static String[] nizFunkcija={"SELECT", "FROM", "WHERE", "UPDATE", "INSERT INTO"};
     private static String tekstPanel;
-    private JTextPane tekstPane;
+    private String tekstPane;
+    private MyFrame instance;
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        tekstPane=new JTextPane();
         tekstPanel= MyFrame.getTekstPanel().getText();
+        instance=MyFrame.getInstance();
         nizReciNorm= tekstPanel.split(" ");
         nizReciVelika=tekstPanel.toUpperCase().split(" ");
+        tekstPane="";
 
         for (int i = 0; i < nizReciVelika.length; i++) {
             for (int j = 0; j < nizFunkcija.length; j++) {
                 if(nizReciVelika[i].equals(nizFunkcija[j])){
-                    tekstPane.setText(nizReciVelika[i]);
-                    break;
-                }
-                else {
-                    tekstPane.setText(nizReciNorm[i]);
-                    break;
+                    if(i==0) {
+                        nizReciNorm[i] =  nizReciVelika[i];
+                    }
+                    else {
+                        nizReciNorm[i] = "\n" + nizReciVelika[i];
+                    }
                 }
             }
         }
-
-        MyFrame.updateTextPane(tekstPane.getText());
+        for (int i = 0; i < nizReciNorm.length; i++) {
+            tekstPane=tekstPane + nizReciNorm[i]+" ";
+        }
+        MyFrame.updateTextPane(tekstPane);
     }
 
 }

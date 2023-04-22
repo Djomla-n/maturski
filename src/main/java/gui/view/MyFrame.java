@@ -88,10 +88,11 @@ public class MyFrame extends JFrame{
         actionManager=new ActionManager();
         pokreniGUI();
     }
-    public void updateTextPane(String s) {
+    public static void updateTextPane(String s) {
         tekstPanel.setText(s);
-        revalidate();
-        repaint();
+        tekstPanel.revalidate();
+        tekstPanel.repaint();
+
     }
 
     public static JTextPane getTekstPanel() {
