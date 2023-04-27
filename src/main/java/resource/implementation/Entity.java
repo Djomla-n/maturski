@@ -19,6 +19,5 @@ public class Entity extends DBNodeComposite {
             Attribute attribute = (Attribute) child;
             this.getChildren().add(attribute);
         }
-
-    }
+    }//isto kao prethodno
 }

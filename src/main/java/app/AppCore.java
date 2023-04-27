@@ -33,7 +33,6 @@ public class AppCore extends PublisherImplementation {
         this.database = new DatabaseImplementation(new MYSQLrepository(this.settings));
         this.tableModel = new TableModel();
         this.tree = new TreeImplementation();
-
     }
 
     private Settings initSettings() {
@@ -47,8 +46,8 @@ public class AppCore extends PublisherImplementation {
 
 
     public DefaultTreeModel loadResource(){
-        InformationResource ir = (InformationResource) this.database.loadResource();
-        return this.tree.generateTree(ir);
+        InformationResource ir = (InformationResource) this.database.loadResource();//pravi 'Cvor' (roditelj ako ne postoji vise cvorova, dete ako postoji roditelj) i u njega dodeljuje informaciju
+        return this.tree.generateTree(ir);//u tree dodeljuje taj 'Cvor'
     }
 
     public void readDataFromTable(String fromTable){

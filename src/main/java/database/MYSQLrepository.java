@@ -23,18 +23,16 @@ public class MYSQLrepository implements Repository{
 
     public MYSQLrepository(Settings settings) {
         this.settings = settings;
-    }
+    }//primarni konstruktor
 
     private void initConnection() throws SQLException, ClassNotFoundException{
         String ip = (String) settings.getParameter("mysql_ip");
         String database = (String) settings.getParameter("mysql_database");
         String username = (String) settings.getParameter("mysql_username");
         String password = (String) settings.getParameter("mysql_password");
-        //Class.forName("net.sourceforge.jtds.jdbc.Driver");
+        //Class.forName("net.sourceforge.jtds.jdbc.Driver");//koristi se za ucitavanje jdbc drivera ali ne mora da se pise jer je uzitan u maven fajlu
         connection = DriverManager.getConnection("jdbc:mysql://"+ip+"/"+database,username,password);
-
-
-    }
+    }//konekcija sa bazom uzima vrednoste iz Constants
 
     private void closeConnection(){
         try{
@@ -46,17 +44,17 @@ public class MYSQLrepository implements Repository{
         finally {
             connection = null;
         }
-    }
+    }//zatvara konekciju
 
 
     @Override
     public DBNode getSchema() {
 
         try{
-            this.initConnection();
+            this.initConnection();//konektuje se na bazu
 
-            DatabaseMetaData metaData = connection.getMetaData();
-            InformationResource ir = new InformationResource("RAF_BP_Primer");
+            DatabaseMetaData metaData = connection.getMetaData();//u metaData dodeljuje (MetaData)objekat koji sadrzi sve podatke iz tabele
+            InformationResource ir = new InformationResource("Maturski");//pravi objekat klase informationResource
 
             String tableType[] = {"TABLE"};
             ResultSet tables = metaData.getTables(connection.getCatalog(), null, null, tableType);

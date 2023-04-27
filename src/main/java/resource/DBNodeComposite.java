@@ -16,13 +16,13 @@ public abstract class DBNodeComposite extends DBNode{
 
     public DBNodeComposite(String name, DBNode parent) {
         super(name, parent);
-        this.children = new ArrayList<>();
+        this.children = new ArrayList<>();//pravi listu childrena
     }
 
     public DBNodeComposite(String name, DBNode parent, ArrayList<DBNode> children) {
         super(name, parent);
         this.children = children;
-    }
+    }//ne koristi se
 
 
     public abstract void addChild(DBNode child);
@@ -34,6 +34,6 @@ public abstract class DBNodeComposite extends DBNode{
             }
         }
         return null;
-    }
+    }//ne koristi se
 
 }

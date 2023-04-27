@@ -20,5 +20,7 @@ public abstract class DBNode {
             return this.getName().equals(otherObj.getName());
         }
         return false;
-    }
+    }//ako objekat nije null i ako je objekat tipa DBNode ili bilo koje klase koja extenduje klasu DBNOde
+    //pravi otherObj koji je tipa DBNode i u njega dodeljuje obj koji pretvara u DBNode
+    //vraca true ako je ime obj jednako imenu OtherObj, u suprotnom vraca false
 }

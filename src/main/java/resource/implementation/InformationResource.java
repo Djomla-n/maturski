@@ -23,5 +23,5 @@ public class InformationResource extends DBNodeComposite {
             Entity entity = (Entity) child;
             this.getChildren().add(entity);
         }
-    }
+    }//isto
 }
