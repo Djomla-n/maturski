@@ -9,6 +9,6 @@ public class SwingGui implements Gui {
     public SwingGui(){
     }
     public void start(){
-        instance=MyFrame.getInstance();
+        instance=MyFrame.getInstance();//uzima iinstancu od Myframea
     }
 }

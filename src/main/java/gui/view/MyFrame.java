@@ -1,22 +1,24 @@
 package gui.view;
+import app.AppCore;
 import gui.controller.ActionManager;
-import gui.controller.ExportAction;
-import gui.controller.PrettyAction;
-import gui.controller.RunAction;
-import lombok.Getter;
-import lombok.Setter;
+import observer.Notification;
+import observer.Subscriber;
+import tree.implementation.SelectionListener;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 
-public class MyFrame extends JFrame{
+public class MyFrame extends JFrame implements Subscriber{
+    private AppCore appCore;
     private JTextPane tekstPanel;
-    private JPanel stabloPanel;
+    private JTree stabloPanel;
     private JPanel goreDesno;
     private JPanel dugmiciPanel;
     private JPanel desniPanel;
     private JSplitPane tekstIDugmici;
     private JTable tabelaPanel;
+    private JScrollPane jsp;
     private JButton export;
     private JButton run;
     private JButton pretty;
@@ -24,7 +26,7 @@ public class MyFrame extends JFrame{
 
     public void pokreniGUI(){
         //panel za stablo
-        stabloPanel = new JPanel();
+        stabloPanel = new JTree();
         stabloPanel.setBackground(Color.blue);
         stabloPanel.setPreferredSize(new Dimension(150, 100));
 
@@ -35,7 +37,7 @@ public class MyFrame extends JFrame{
         tekstPanel.add(Box.createHorizontalGlue());
 
         run=new JButton("run");
-        run.addActionListener(actionManager.getRunAction());
+        run.addActionListener(actionManager.getRunAction());//zbog klase abstractAction moze da radi addActionListener, koji dalje poziva samo dugme runAction
         run.setFocusable(false);
         pretty=new JButton("pretty");
         pretty.setFocusable(false);
@@ -66,6 +68,8 @@ public class MyFrame extends JFrame{
         //panel za tabelu
         tabelaPanel = new JTable();
         tabelaPanel.setBackground(Color.green);
+        tabelaPanel.setFillsViewportHeight(true);
+        this.add(new JScrollPane(tabelaPanel));
         tabelaPanel.setPreferredSize(new Dimension(150, 150));
 
         //panel koji spaja tekst i dugmice sa tabelom
@@ -83,22 +87,30 @@ public class MyFrame extends JFrame{
         this.setSize(900, 600);
         this.setVisible(true);
     }
-    public MyFrame() {
-        actionManager=new ActionManager();
-        pokreniGUI();
+    public AppCore getAppCore() {
+        return appCore;
     }
-    public void updateTextPane() {
-        //tekstPanel.setText(s);
-        tekstPanel.revalidate();
-        tekstPanel.repaint();
+    public void setAppCore(AppCore appCore) {
+        this.appCore = appCore;
+        this.appCore.addSubscriber(this);
+        this.tabelaPanel.setModel(appCore.getTableModel());
+        initialiseTree();
+    }
+    private void initialiseTree() {
+        DefaultTreeModel defaultTreeModel = appCore.loadResource();
+        stabloPanel = new JTree(defaultTreeModel);
+        stabloPanel.addTreeSelectionListener(new SelectionListener());
+        jsp = new JScrollPane(stabloPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
+        pack();
+    }
 
+    public MyFrame() {
+        actionManager=new ActionManager();//dodaje novi ActionManager
+        pokreniGUI();//poziva pokreniGui
     }
 
     public  JTextPane getTekstPanel() {
         return tekstPanel;
-    }
-    public void setTekstPanel(JTextPane tekstPanel) {
-        this.tekstPanel = tekstPanel;
     }
     //singletone
 
@@ -109,5 +121,10 @@ public class MyFrame extends JFrame{
             instance = new MyFrame();
         }
         return instance;
+    }
+
+    @Override
+    public void update(Notification notification) {
+
     }
 }
