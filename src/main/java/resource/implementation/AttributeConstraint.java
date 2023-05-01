@@ -15,6 +15,6 @@ public class AttributeConstraint extends DBNode {
     public AttributeConstraint(String name, DBNode parent, ConstraintType constraintType) {
         super(name, parent);
         this.constraintType = constraintType;
-    }
+    }//primarni konstruktor koji sadrzi ime, podatke o roditelju kao i koju vrednost ima u tabeli
 
 }

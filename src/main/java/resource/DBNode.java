@@ -11,6 +11,7 @@ public abstract class DBNode {
     private String name;
     @ToString.Exclude
     private DBNode parent;
+//klasa sadrzi ime samog cvora kao i podatke o roditelju (samo ime ako roditelj nema roditelja, a ako ima sve ok se ne dodje do glavnog cvora)
 
 
     @Override

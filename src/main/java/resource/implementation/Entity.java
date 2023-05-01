@@ -19,5 +19,7 @@ public class Entity extends DBNodeComposite {
             Attribute attribute = (Attribute) child;
             this.getChildren().add(attribute);
         }
-    }//isto kao prethodno
+    }//ako nije null i ako je child instanceof Attribute onda  pravi objekat klase Attribute i u njega dodeljuje child
+    //koji pretvara u Attribute. Zatim u litu dodeljuje to dete
+
 }

@@ -6,10 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
+//omogucava da se pozove setName
 public class Row {
 
-    private String name;
-    private Map<String, Object> fields;
+    private String name;//ime redea
+    private Map<String, Object> fields;//mapa polja
 
 
     public Row() {
@@ -18,7 +19,7 @@ public class Row {
 
     public void addField(String fieldName, Object value) {
         this.fields.put(fieldName, value);
-    }
+    }//u polje upisuje njegovu vrednost i njegovo ime
 
     public void removeField(String fieldName) {
         this.fields.remove(fieldName);

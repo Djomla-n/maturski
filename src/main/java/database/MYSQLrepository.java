@@ -54,32 +54,37 @@ public class MYSQLrepository implements Repository{
             this.initConnection();//konektuje se na bazu
 
             DatabaseMetaData metaData = connection.getMetaData();//u metaData dodeljuje (MetaData)objekat koji sadrzi sve podatke iz tabele
-            InformationResource ir = new InformationResource("Maturski");//pravi objekat klase informationResource
+            InformationResource ir = new InformationResource("Maturski");//pravi glavni cvor u koji dodeljuje ime
 
             String tableType[] = {"TABLE"};
             ResultSet tables = metaData.getTables(connection.getCatalog(), null, null, tableType);
+            //pravi objekat tipa ResultSet koji vraca tabelu
+            //prvi argument predstavlja ime baze podataka za koju se dobijaju informacije o tabelama (connection.getCatalog() vraca ime trenutne baze podataka)
+            //drugi i treci nista
+            //cetvrti sta zelimo da nam vrate "TABLE", "VIEW"...
 
-            while (tables.next()){
+            while (tables.next()){//dok postoji sledeca tabela
 
-                String tableName = tables.getString("TABLE_NAME");
-                if(tableName.contains("trace"))continue;
-                Entity newTable = new Entity(tableName, ir);
-                ir.addChild(newTable);
+                String tableName = tables.getString("TABLE_NAME");//u tableName dodeljujemo ime tabele
+                if(tableName.contains("trace"))continue;//ako je ime tabele trace preskoci je
+                Entity newTable = new Entity(tableName, ir);//pravi cvor (ime cvora je tableName a njen roditelj je Matusrski (glavni cvor)
+                ir.addChild(newTable);//dodaje taj cvor
 
                 //Koje atribute imaja ova tabela?
 
-                ResultSet columns = metaData.getColumns(connection.getCatalog(), null, tableName, null);
+                    ResultSet columns = metaData.getColumns(connection.getCatalog(), null, tableName, null);
+                    //prvi argument je ime baze podataka, treci kaze da gleda samo tabele koje se zovu tableName
 
-                while (columns.next()){
+                while (columns.next()){//dok postoje sledece kolone
 
                     // COLUMN_NAME TYPE_NAME COLUMN_SIZE ....
 
-                    String columnName = columns.getString("COLUMN_NAME");
-                    String columnType = columns.getString("TYPE_NAME");
+                    String columnName = columns.getString("COLUMN_NAME");//u columnName dodeljuje ime kolone
+                    String columnType = columns.getString("TYPE_NAME");//u columnType dodeljuje ime tipa kolone
 
-                    System.out.println(columnType);
+                    //System.out.println(columnType);//ispisuje tip kolone
 
-                    int columnSize = Integer.parseInt(columns.getString("COLUMN_SIZE"));
+                    int columnSize = Integer.parseInt(columns.getString("COLUMN_SIZE"));//u columnSize dodeljuje velicinu same kolone
 
 //                    ResultSet pkeys = metaData.getPrimaryKeys(connection.getCatalog(), null, tableName);
 //
@@ -94,7 +99,13 @@ public class MYSQLrepository implements Repository{
                                     .collect(Collectors.joining("_"))),
                             columnSize);
                     newTable.addChild(attribute);
-
+                    //pravi objekat attribute kojem prosledjuje njgovo ime, roditelja (to ce biti Entity),
+                    //tip podataka pretvara vrednosti iz enum fajla u niz iz kojeg se kreira stream (mogu se koristiti stream opcije nad elementima niza)
+                    //ime tipa kolone pretvara u velika slova, a zatim ih deli po razmaku.
+                    //Onda metoda collect iz streama prikuplja sve dobiijene podatke spaja koristecu _
+                    //npr ako nam columnType sadrzi int unsigned prvo ga pretvaramo u INT UNSIGNED, zatim ga delimo po razmaku ondosno sada imamo samo INT i samo UNSIGNED
+                    //i na kraju skupljamo oba ta sto smo dobili i spajamo ih koristeci _ tako da dobijamo INT_UNSIGNED sto nam se podudara sa onim iz enum fajla
+                    //na kraju dodeljujemo samo broj redova
                 }
 
 
@@ -105,7 +116,7 @@ public class MYSQLrepository implements Repository{
             //TODO Ogranicenja nad kolonama? Relacije?
 
 
-            return ir;
+            return ir;// na kraju vracamo glavni cvor koji sadrzi sve svoje pod cvorove
             //String isNullable = columns.getString("IS_NULLABLE");
             // ResultSet foreignKeys = metaData.getImportedKeys(connection.getCatalog(), null, table.getName());
             // ResultSet primaryKeys = metaData.getPrimaryKeys(connection.getCatalog(), null, table.getName());
@@ -114,9 +125,10 @@ public class MYSQLrepository implements Repository{
         catch (SQLException e1) {
             e1.printStackTrace();
         }
-        catch (ClassNotFoundException e2){ e2.printStackTrace();}
+        catch (ClassNotFoundException e2){
+            e2.printStackTrace();}
         finally {
-            this.closeConnection();
+            this.closeConnection();//zatvaramo konekciju
         }
 
         return null;
@@ -129,22 +141,26 @@ public class MYSQLrepository implements Repository{
 
 
         try{
-            this.initConnection();
+            this.initConnection();//konektuje se sa bazom
 
-            String query = "SELECT * FROM " + from;
+            String query = "SELECT * FROM " + from;//pravljenje upita
             PreparedStatement preparedStatement = connection.prepareStatement(query);
+            //PreparedStatement efikasnije izvrsavanje upita nad bazom
+            //u prparedStatement se dodeljuje cela tabela cije je ime deklarisano u samom pozivu metode
             ResultSet rs = preparedStatement.executeQuery();
+            //ispisivanje samog preparedStatement-a
             ResultSetMetaData resultSetMetaData = rs.getMetaData();
+            //u resultSetMetaData dodeljuju se podatci u kolonama ime, tip podataka, velicina...
 
-            while (rs.next()){
+            while (rs.next()){//dok postoji sledeca tabela
 
-                Row row = new Row();
-                row.setName(from);
+                Row row = new Row();//pravi objekat row
+                row.setName(from);//u ime reda dodeljuje ime same kolone
 
                 for (int i = 1; i<=resultSetMetaData.getColumnCount(); i++){
                     row.addField(resultSetMetaData.getColumnName(i), rs.getString(i));
-                }
-                rows.add(row);
+                }//dodeljuje polja u red
+                rows.add(row);//u listu redova dodeljuje red
 
 
             }

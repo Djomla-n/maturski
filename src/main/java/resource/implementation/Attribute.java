@@ -11,7 +11,7 @@ import resource.enums.AttributeType;
 public class Attribute extends DBNodeComposite {
 
 
-    private AttributeType attributeType;
+    private AttributeType attributeType;// sadrzi tip (da li je int, varchar...)
     private int length;
     private Attribute inRelationWith;
 
@@ -34,5 +34,6 @@ public class Attribute extends DBNodeComposite {
     }//ako child nije null i ako je child tipa DBNode ili bilo koje klase koja extenduje klasu AttributeConstraint
     // pravi attributeConstraint u koji dodaje child koji se pretvara u AttributeConstraint koji sadrzi informacije
     // imenu, roditelju, o tome da li je primary_key ili sta vec?
+    // zatim u listu getChildren dodaje attributeConstraint
 }
 
