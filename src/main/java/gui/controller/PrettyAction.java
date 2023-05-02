@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 
 public class PrettyAction extends AbstractMaturskiAction{
     private String[] nizReciVelika;
@@ -20,20 +21,28 @@ public class PrettyAction extends AbstractMaturskiAction{
         nizReciVelika=pocetan.getText().toUpperCase().split(" ");
         pocetan.setText("");
 
+        while(nizReciNorm[0].equals("")){
+            nizReciNorm=pomeri(nizReciNorm);
+            nizReciVelika=pomeri(nizReciVelika);
+        }//uklanja sve razmake
+
         for (int i = 0; i < nizReciVelika.length; i++) {
             for (int j = 0; j < nizFunkcija.length; j++) {
-                if (nizReciVelika[i].equals(nizFunkcija[j])) {
+                if (nizReciVelika[i].equals(nizFunkcija[j]) || nizReciVelika[i].equals("")) {
                     if (nizReciVelika[i].equals("AS") || nizReciVelika[i].equals("OR") || nizReciVelika[i].equals("IN")) {
                             nizReciNorm[i]= nizReciVelika[i];
                     }
+
                     else {
-                        if (i == 0) {
-                            nizReciNorm[i]= nizReciVelika[i];
-                        } else {
+                        if (i == 0 ) {
+                                nizReciNorm[i] = nizReciVelika[i];
+                        }
+                        else {
                             nizReciNorm[i]= "\n" + nizReciVelika[i];
                         }
                     }
                 }
+
             }
         }
         for (int i = 0; i < nizReciNorm.length; i++) {
@@ -47,6 +56,12 @@ public class PrettyAction extends AbstractMaturskiAction{
                 appendToPane(pocetan, nizReciNorm[i] + " ", Color.black);
             }
         }
+    }
+    public String[] pomeri(String[] niz){
+        for (int i = 0; i < niz.length-1; i++) {
+            niz[i]= niz[i+1];
+        }
+        return  Arrays.copyOfRange(niz, 0, niz.length - 1);//uklanja poslednji element niza
     }
 
 
