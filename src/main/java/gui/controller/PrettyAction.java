@@ -22,17 +22,17 @@ public class PrettyAction extends AbstractMaturskiAction{
         pocetan.setText("");
 
         while(nizReciNorm[0].equals("")){
-            nizReciNorm=pomeri(nizReciNorm);
-            nizReciVelika=pomeri(nizReciVelika);
-        }//uklanja sve razmake
+            nizReciNorm=pomeri(nizReciNorm, 0);
+            nizReciVelika=pomeri(nizReciVelika, 0);
+        }
+
 
         for (int i = 0; i < nizReciVelika.length; i++) {
             for (int j = 0; j < nizFunkcija.length; j++) {
-                if (nizReciVelika[i].equals(nizFunkcija[j]) || nizReciVelika[i].equals("")) {
+                if (nizReciVelika[i].equals(nizFunkcija[j]) ) {
                     if (nizReciVelika[i].equals("AS") || nizReciVelika[i].equals("OR") || nizReciVelika[i].equals("IN")) {
-                            nizReciNorm[i]= nizReciVelika[i];
+                        nizReciNorm[i] = nizReciVelika[i];
                     }
-
                     else {
                         if (i == 0 ) {
                                 nizReciNorm[i] = nizReciVelika[i];
@@ -42,23 +42,28 @@ public class PrettyAction extends AbstractMaturskiAction{
                         }
                     }
                 }
+                else if(nizReciVelika.equals("")){
+                    nizReciNorm=pomeri(nizReciVelika, i);
+                }
 
             }
         }
         for (int i = 0; i < nizReciNorm.length; i++) {
             if(nizReciNorm[i].equals(nizReciNorm[i].toUpperCase())) {
                 appendToPane(pocetan, nizReciNorm[i] + " ", Color.blue);
+                vrati(pocetan);
             }
             else if(nizReciNorm[i].toUpperCase().equals("INSERT") && nizReciNorm[i+1].toUpperCase().equals("INTO")){
                 appendToPane(pocetan, "\n"+ nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
+                vrati(pocetan);
             }
             else{
                 appendToPane(pocetan, nizReciNorm[i] + " ", Color.black);
             }
         }
     }
-    public String[] pomeri(String[] niz){
-        for (int i = 0; i < niz.length-1; i++) {
+    public String[] pomeri(String[] niz, int x){
+        for (int i = x; i < niz.length-1; i++) {
             niz[i]= niz[i+1];
         }
         return  Arrays.copyOfRange(niz, 0, niz.length - 1);//uklanja poslednji element niza
@@ -72,6 +77,12 @@ public class PrettyAction extends AbstractMaturskiAction{
         tp.setCaretPosition(duzina); // postavlja kursor na kraj kako bi tekst koji sledeci dodaje bio na kraju
         tp.setCharacterAttributes(boja, false); // u tekst panel posavlja boju
         tp.replaceSelection(str); // dodaje samo obojeni tekst
+    }
+    public void vrati(JTextPane tp){
+        SimpleAttributeSet vrati = new SimpleAttributeSet();
+        StyleConstants.setForeground(vrati, Color.black);
+        tp.setCharacterAttributes(vrati, false);
+        //vraca boju u crnu
     }
 
 }

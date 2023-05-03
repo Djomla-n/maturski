@@ -14,8 +14,8 @@ import java.util.Iterator;
 public class TreeItem<DBNode> extends DefaultMutableTreeNode {
 
 
-    private String name;
-    private DBNode dbNode;
+    private String name;//ime
+    private DBNode dbNode;//cvor
 
     public TreeItem(DBNode node) {
         this.dbNode = node;
@@ -29,40 +29,40 @@ public class TreeItem<DBNode> extends DefaultMutableTreeNode {
     @Override
     public int getIndex(TreeNode node) {
         return findIndexByChild((TreeItem)node);
-    }
+    }//vraca indeks zadatog podcvora
 
     @Override
     public TreeNode getChildAt(int childIndex) {
         return findChildByIndex(childIndex);
-    }
+    }//vraca podcvor koji se nalazi na poziciji childIndex
 
     @Override
     public int getChildCount() {
         if(dbNode instanceof DBNodeComposite)
             return ((DBNodeComposite) dbNode).getChildren().size();
         return 0;
-    }
+    }//vraca ukupan broj podcvorova
 
     @Override
     public boolean getAllowsChildren() {
         if(dbNode instanceof DBNodeComposite)
             return true;
         return false;
-    }
+    }//true ako cvor koji je pozvao metodu moze da sadrzi podcvorove else u suprotnom
 
     @Override
     public boolean isLeaf() {
         if(dbNode instanceof DBNodeComposite)
             return false;
         return true;
-    }
+    }//da li je pozivalac list
 
     @Override
     public Enumeration children() {
         if(dbNode instanceof DBNodeComposite)
             return (Enumeration) ((DBNodeComposite) dbNode).getChildren();
         return null;
-    }
+    }//vraca sve podcvorove i pretvara ih u enum
 
 
     @Override
@@ -72,7 +72,7 @@ public class TreeItem<DBNode> extends DefaultMutableTreeNode {
             return this.dbNode.equals(otherObj.dbNode);
         }
         return false;
-    }
+    }//objasnjeno vise puta u resource.implementation
 
     private TreeNode findChildByIndex(int childIndex){
 
@@ -90,7 +90,7 @@ public class TreeItem<DBNode> extends DefaultMutableTreeNode {
         }
 
         return null;
-    }
+    }//nalazi podcvor pozadatom indeksu
 
     private int findIndexByChild(TreeItem node){
 
@@ -99,10 +99,10 @@ public class TreeItem<DBNode> extends DefaultMutableTreeNode {
         }
 
         return -1;
-    }
+    }//vraca indeks samog podcvora koji je prosledjen
 
     @Override
     public String toString() {
         return name;
-    }
+    }//ispisuje ime podcvora
 }

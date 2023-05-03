@@ -31,7 +31,7 @@ public class Attribute extends DBNodeComposite {
             AttributeConstraint attributeConstraint = (AttributeConstraint) child;
             this.getChildren().add(attributeConstraint);
         }
-    }//ako child nije null i ako je child tipa DBNode ili bilo koje klase koja extenduje klasu AttributeConstraint
+    }//ako child nije null i ako je child tipa AttributeConstraint ili bilo koje klase koja extenduje klasu AttributeConstraint
     // pravi attributeConstraint u koji dodaje child koji se pretvara u AttributeConstraint koji sadrzi informacije
     // imenu, roditelju, o tome da li je primary_key ili sta vec?
     // zatim u listu getChildren dodaje attributeConstraint

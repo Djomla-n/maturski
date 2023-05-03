@@ -23,16 +23,15 @@ public class MyFrame extends JFrame implements Subscriber{
     private JButton run;
     private JButton pretty;
     private ActionManager actionManager;
+    private static MyFrame instance=null;
 
     public void pokreniGUI(){
         //panel za stablo
         stabloPanel = new JTree();
-        stabloPanel.setBackground(Color.blue);
         stabloPanel.setPreferredSize(new Dimension(150, 100));
-
+        initialiseTree();
         //panel za tekst
         tekstPanel = new JTextPane();//tekstPane da bi tekst mogao da ide koliko god
-        tekstPanel.setBackground(Color.ORANGE);
         tekstPanel.setPreferredSize(new Dimension(450, 250));
         tekstPanel.add(Box.createHorizontalGlue());
 
@@ -48,7 +47,6 @@ public class MyFrame extends JFrame implements Subscriber{
 
         //panel za dugmice
         dugmiciPanel = new JPanel();
-        dugmiciPanel.setBackground(Color.red);
         dugmiciPanel.setLayout(new GridLayout(3,1,10,10));
         dugmiciPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
         dugmiciPanel.add(run);
@@ -67,7 +65,6 @@ public class MyFrame extends JFrame implements Subscriber{
 
         //panel za tabelu
         tabelaPanel = new JTable();
-        tabelaPanel.setBackground(Color.green);
         tabelaPanel.setFillsViewportHeight(true);
         this.add(new JScrollPane(tabelaPanel));
         tabelaPanel.setPreferredSize(new Dimension(150, 150));
@@ -86,15 +83,17 @@ public class MyFrame extends JFrame implements Subscriber{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 600);
         this.setVisible(true);
+
     }
     public AppCore getAppCore() {
         return appCore;
     }
     public void setAppCore(AppCore appCore) {
         this.appCore = appCore;
+        pokreniGUI();//poziva pokreniGui
         this.appCore.addSubscriber(this);
         this.tabelaPanel.setModel(appCore.getTableModel());
-        initialiseTree();
+
     }
     private void initialiseTree() {
         DefaultTreeModel defaultTreeModel = appCore.loadResource();
@@ -106,15 +105,12 @@ public class MyFrame extends JFrame implements Subscriber{
 
     public MyFrame() {
         actionManager=new ActionManager();//dodaje novi ActionManager
-        pokreniGUI();//poziva pokreniGui
     }
 
     public  JTextPane getTekstPanel() {
         return tekstPanel;
     }
     //singletone
-
-    private static MyFrame instance=null;
 
     public static MyFrame getInstance(){
         if(instance==null){

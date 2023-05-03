@@ -1,13 +1,10 @@
 package app;
 
-import core.ApplicationFramework;
-import core.Gui;
 import database.Database;
 import database.DatabaseImplementation;
 import database.MYSQLrepository;
 import database.settings.Settings;
 import database.settings.SettingsImplementation;
-import gui.SwingGui;
 import gui.table.TableModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +27,6 @@ public class AppCore extends PublisherImplementation {
     private TableModel tableModel;
     private DefaultTreeModel defaultTreeModel;
     private Tree tree;
-    private ApplicationFramework applicationFramework;
 
     public AppCore() {
         this.settings = initSettings();//u settings dodeljuje sve sto je potrebno za konekciju
@@ -38,16 +34,7 @@ public class AppCore extends PublisherImplementation {
         //pravi objekat MYSQLrepository u koji prosledjuje setting, koji se dalje prosledjuje u objekat klase DatabaseImplementation
         this.tableModel = new TableModel();
         this.tree = new TreeImplementation();
-        this.applicationFramework=initaf();
     }
-    private ApplicationFramework initaf(){
-        ApplicationFramework  af= ApplicationFramework.getInstance();
-        Gui gui=new SwingGui();
-        af.izvrsi(gui);
-        af.run();
-        return af;
-    }//pokrece gui
-
     private Settings initSettings() {
         Settings settingsImplementation = new SettingsImplementation();
         settingsImplementation.addParameter("mysql_ip", Constants.MYSQL_IP);

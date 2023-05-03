@@ -1,8 +1,5 @@
 package app;
 
-import core.ApplicationFramework;
-import core.Gui;
-import gui.SwingGui;
 import gui.view.MyFrame;
 
 public class Main {
