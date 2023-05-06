@@ -1,6 +1,7 @@
 package gui.controller;
 
 import gui.view.MyFrame;
+import resource.enums.Upiti;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -11,15 +12,23 @@ import java.util.Arrays;
 public class PrettyAction extends AbstractMaturskiAction{
     private String[] nizReciVelika;
     private String[] nizReciNorm;
-    private String[] nizFunkcija={"SELECT", "FROM", "WHERE", "UPDATE", "AS", "OR", "IN"};
+    //private String[] nizFunkcija={"SELECT", "FROM", "WHERE", "UPDATE", "AS", "OR", "IN"};
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Upiti[] funkcija = Upiti.values();
+        String[] nizFunkcija = new String[funkcija.length];
+
+        for (int i = 0; i < funkcija.length; i++) {
+            nizFunkcija[i] = funkcija[i].toString();
+        }
+
         JTextPane pocetan = MyFrame.getInstance().getTekstPanel();
-        nizReciNorm = pocetan.getText().split(" ");
-        nizReciVelika=pocetan.getText().toUpperCase().split(" ");
+        nizReciNorm = pocetan.getText().replace("\n", " ").split(" ");
+        nizReciVelika=pocetan.getText().replace("\n", " ").toUpperCase().split(" ");
         pocetan.setText("");
+
 
         while(nizReciNorm[0].equals("")){
             nizReciNorm=pomeri(nizReciNorm, 0);
@@ -30,7 +39,7 @@ public class PrettyAction extends AbstractMaturskiAction{
         for (int i = 0; i < nizReciVelika.length; i++) {
             for (int j = 0; j < nizFunkcija.length; j++) {
                 if (nizReciVelika[i].equals(nizFunkcija[j]) ) {
-                    if (nizReciVelika[i].equals("AS") || nizReciVelika[i].equals("OR") || nizReciVelika[i].equals("IN")) {
+                    if (proveri(nizReciVelika[i])) {
                         nizReciNorm[i] = nizReciVelika[i];
                     }
                     else {
@@ -53,14 +62,52 @@ public class PrettyAction extends AbstractMaturskiAction{
                 appendToPane(pocetan, nizReciNorm[i] + " ", Color.blue);
                 vrati(pocetan);
             }
-            else if(nizReciNorm[i].toUpperCase().equals("INSERT") && nizReciNorm[i+1].toUpperCase().equals("INTO")){
-                appendToPane(pocetan, "\n"+ nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
+            else if(nizReciVelika[i].equals("INNER") || nizReciVelika[i].equals("RIGHT") || nizReciVelika[i].equals("LEFT") || nizReciVelika[i].equals("OUTHER") && nizReciVelika[i+1].equals("JOIN")){
+                appendToPane(pocetan, nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
                 vrati(pocetan);
+                i++;
             }
+            else if(nizReciVelika[i].equals("INSERT") && nizReciVelika[i+1].equals("INTO")){
+                appendToPane(pocetan, nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
+                vrati(pocetan);
+                i++;
+            }
+            else if(nizReciVelika[i].equals("GROUP") || nizReciVelika[i].equals("ORDER") && nizReciVelika[i+1].equals("BY")){
+                if(nizReciVelika[i].equals("GROUP")){
+                    appendToPane(pocetan, "\n" + nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
+                }
+                else{
+                    appendToPane(pocetan, nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
+                }
+                vrati(pocetan);
+                i++;
+            }
+            else if(nizReciVelika[i].equals("CREATE") || nizReciVelika[i].equals("DROP") || nizReciVelika[i].equals("ALTER") && nizReciVelika[i+1].equals("TABLE")){
+                if(i==0){
+                    appendToPane(pocetan, nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
+                }
+                else {
+                    appendToPane(pocetan, "\n" + nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
+                }
+                vrati(pocetan);
+                i++;
+            }
+
+
             else{
                 appendToPane(pocetan, nizReciNorm[i] + " ", Color.black);
             }
         }
+    }
+    public boolean proveri(String naredba){
+        String[] niz={"IN","AS","OR", "BETWEEN","NOT", "EXIST", "LIKE", "SET", "DISTINCT", "ASC", "DESC", "ON",
+                "JOIN"};
+        for (int i = 0; i < niz.length; i++) {
+            if(naredba.equals(niz[i])) {
+                return true;
+            }
+        }
+        return false;
     }
     public String[] pomeri(String[] niz, int x){
         for (int i = x; i < niz.length-1; i++) {
