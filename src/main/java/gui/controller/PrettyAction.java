@@ -58,11 +58,7 @@ public class PrettyAction extends AbstractMaturskiAction{
             }
         }
         for (int i = 0; i < nizReciNorm.length; i++) {
-            if(nizReciNorm[i].equals(nizReciNorm[i].toUpperCase())) {
-                appendToPane(pocetan, nizReciNorm[i] + " ", Color.blue);
-                vrati(pocetan);
-            }
-            else if(nizReciVelika[i].equals("INNER") || nizReciVelika[i].equals("RIGHT") || nizReciVelika[i].equals("LEFT") || nizReciVelika[i].equals("OUTHER") && nizReciVelika[i+1].equals("JOIN")){
+            if(nizReciVelika[i].equals("INNER") || nizReciVelika[i].equals("RIGHT") || nizReciVelika[i].equals("LEFT") || nizReciVelika[i].equals("OUTHER") && nizReciVelika[i+1].equals("JOIN")){
                 appendToPane(pocetan, nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
                 vrati(pocetan);
                 i++;
@@ -92,8 +88,10 @@ public class PrettyAction extends AbstractMaturskiAction{
                 vrati(pocetan);
                 i++;
             }
-
-
+            else if(nizReciNorm[i].equals(nizReciNorm[i].toUpperCase())) {
+                appendToPane(pocetan, nizReciNorm[i] + " ", Color.blue);
+                vrati(pocetan);
+            }
             else{
                 appendToPane(pocetan, nizReciNorm[i] + " ", Color.black);
             }
@@ -109,6 +107,7 @@ public class PrettyAction extends AbstractMaturskiAction{
         }
         return false;
     }
+
     public String[] pomeri(String[] niz, int x){
         for (int i = x; i < niz.length-1; i++) {
             niz[i]= niz[i+1];
