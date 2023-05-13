@@ -17,6 +17,7 @@ public class RunAction extends AbstractMaturskiAction{
         String tekst = MyFrame.getInstance().getTekstPanel().getText();
         try {
             appCore.posaljiUpit(tekst);
+           // MyFrame.getInstance().getTekstPanel().setText("");
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }

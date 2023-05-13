@@ -12,6 +12,7 @@ import lombok.Setter;
 import observer.Notification;
 import observer.enums.NotificationCode;
 import observer.implementation.PublisherImplementation;
+import query.Description;
 import resource.data.Row;
 import resource.implementation.InformationResource;
 import tree.Tree;
@@ -20,6 +21,7 @@ import utils.Constants;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ public class AppCore extends PublisherImplementation {
     private TableModel tableModel;
     private DefaultTreeModel defaultTreeModel;
     private Tree tree;
+    private Description description = new Description();
 
     public AppCore() {
         this.settings = initSettings();//u settings dodeljuje sve sto je potrebno za konekciju
@@ -53,6 +56,11 @@ public class AppCore extends PublisherImplementation {
 
     public DefaultTreeModel loadResource(){
         InformationResource ir = (InformationResource) this.database.loadResource();//pravi 'Cvor' (roditelj ako ne postoji vise cvorova, dete ako postoji roditelj) i u njega dodeljuje informaciju
+        try {
+            description.loadJSON();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return this.tree.generateTree(ir);//u tree dodeljuje taj 'Cvor'
     }
 
@@ -97,6 +105,10 @@ public class AppCore extends PublisherImplementation {
                 finally {
                     connection = null;
                 }
+        }
+        else{
+            Statement stmt = connection.createStatement();
+            stmt.execute(upit);
         }
     }
 }

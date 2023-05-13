@@ -1,0 +1,32 @@
+{
+    "rule1": [{
+        "name": "RuleColumn",
+        "desc": "There is no column %s in table %s",
+        "sgs": "Try to remove column %s from query"
+    }],
+    "rule2": [{
+        "name": "RuleTable",
+        "desc": "There is no table %s in database",
+        "sgs": "Try to check table %s name"
+    }],
+    "rule3": [{
+        "name": "RuleForeignKey",
+        "desc": "Column %s in table %s is not foreign key",
+        "sgs": "Try to check column %s name"
+    }],
+    "rule4": [{
+        "name": "RuleAlias",
+        "desc": "There is not quotes in alias with more than one word",
+        "sgs": "Try to add quotes on start and on end of allias"
+    }],
+    "rule5": [{
+        "name": "RuleGroupBy",
+        "desc": "There is not GROUP BY in function of aggregation",
+        "sgs": "Try to add GROUP BY"
+    }],
+    "rule6": [{
+        "name": "RuleWhere",
+        "desc": "There is function of aggregation in WHERE part",
+        "sgs": "Try to remove function of aggregation"
+    }]
+}
