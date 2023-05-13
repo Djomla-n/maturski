@@ -23,7 +23,7 @@ public enum Upiti {
     HAVING,//
     VALUES,//
     SET,//
-    JOIN,//
+    //JOIN,//
     //RIGHT,
     //INNER,
     //LEFT,

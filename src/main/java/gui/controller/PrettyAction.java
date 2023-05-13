@@ -25,15 +25,17 @@ public class PrettyAction extends AbstractMaturskiAction{
         }
 
         JTextPane pocetan = MyFrame.getInstance().getTekstPanel();
-        nizReciNorm = pocetan.getText().replace("\n", " ").split(" ");
-        nizReciVelika=pocetan.getText().replace("\n", " ").toUpperCase().split(" ");
+        nizReciNorm = pocetan.getText().split("[\r\n ]");
+        nizReciVelika=pocetan.getText().toUpperCase().split("[\r\n ]");
+        if(pocetan.getText().isEmpty()) return;
+
         pocetan.setText("");
 
 
-        while(nizReciNorm[0].equals("")){
+       /* while(nizReciNorm[0].equals("")){
             nizReciNorm=pomeri(nizReciNorm, 0);
             nizReciVelika=pomeri(nizReciVelika, 0);
-        }
+        }*/
 
 
         for (int i = 0; i < nizReciVelika.length; i++) {
@@ -59,9 +61,13 @@ public class PrettyAction extends AbstractMaturskiAction{
         }
         for (int i = 0; i < nizReciNorm.length; i++) {
             if(nizReciVelika[i].equals("INNER") || nizReciVelika[i].equals("RIGHT") || nizReciVelika[i].equals("LEFT") || nizReciVelika[i].equals("OUTHER") && nizReciVelika[i+1].equals("JOIN")){
-                appendToPane(pocetan, nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
+                appendToPane(pocetan, "\n" + nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
                 vrati(pocetan);
                 i++;
+            }
+            else if(nizReciVelika[i].equals("JOIN")){
+                appendToPane(pocetan, "\n" + nizReciVelika[i]+ " ", Color.blue);
+                vrati(pocetan);
             }
             else if(nizReciVelika[i].equals("INSERT") && nizReciVelika[i+1].equals("INTO")){
                 appendToPane(pocetan, nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
@@ -99,7 +105,7 @@ public class PrettyAction extends AbstractMaturskiAction{
     }
     public boolean proveri(String naredba){
         String[] niz={"IN","AS","OR", "BETWEEN","NOT", "EXIST", "LIKE", "SET", "DISTINCT", "ASC", "DESC", "ON",
-                "JOIN"};
+                };
         for (int i = 0; i < niz.length; i++) {
             if(naredba.equals(niz[i])) {
                 return true;

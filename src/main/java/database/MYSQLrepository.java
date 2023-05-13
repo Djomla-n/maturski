@@ -2,6 +2,7 @@ package database;
 
 import database.settings.Settings;
 import lombok.Data;
+import lombok.Getter;
 import resource.DBNode;
 import resource.data.Row;
 import resource.enums.AttributeType;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
+@Getter
 public class MYSQLrepository implements Repository{
 
     private Settings settings;
@@ -25,7 +27,7 @@ public class MYSQLrepository implements Repository{
         this.settings = settings;
     }//primarni konstruktor
 
-    private void initConnection() throws SQLException, ClassNotFoundException{
+    public void initConnection() throws SQLException, ClassNotFoundException{
         String ip = (String) settings.getParameter("mysql_ip");
         String database = (String) settings.getParameter("mysql_database");
         String username = (String) settings.getParameter("mysql_username");

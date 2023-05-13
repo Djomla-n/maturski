@@ -12,12 +12,17 @@ import lombok.Setter;
 import observer.Notification;
 import observer.enums.NotificationCode;
 import observer.implementation.PublisherImplementation;
+import resource.data.Row;
 import resource.implementation.InformationResource;
 import tree.Tree;
 import tree.implementation.TreeImplementation;
 import utils.Constants;
 
+import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -57,5 +62,41 @@ public class AppCore extends PublisherImplementation {
         MyFrame.getInstance().getTabelaPanel().setModel(tableModel);
         //Zasto ova linija moze da ostane zakomentarisana?
         this.notifySubscribers(new Notification(NotificationCode.DATA_UPDATED, this.getTableModel()));
+    }
+
+    private MYSQLrepository rep;
+    private String[] niz;
+    List<Row> rows = new ArrayList<>();
+    public void posaljiUpit(String upit) throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:mysql://"+ Constants.MYSQL_IP +"/"+Constants.MYSQL_DATABASE
+                ,Constants.MYSQL_USERNAME,Constants.MYSQL_PASSWORD);
+        String pocetan = upit;
+        niz= pocetan.split(" ");
+        if(niz[0].equalsIgnoreCase("SELECT")){
+            String query = MyFrame.getInstance().getTekstPanel().toString();
+            PreparedStatement preparedStatement = connection.prepareStatement(upit);
+            ResultSet rs = preparedStatement.executeQuery();
+            ResultSetMetaData resultSetMetaData = rs.getMetaData();
+
+                while(rs.next()){
+                    Row row = new Row();
+
+                    for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+                        row.addField(resultSetMetaData.getColumnName(i), rs.getString(i));
+                    }
+                    rows.add(row);
+                }
+                tableModel.setRows(rows);
+                MyFrame.getInstance().getTabelaPanel().setModel(tableModel);
+                rows.clear();
+                try {
+                    connection.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+                finally {
+                    connection = null;
+                }
+        }
     }
 }
