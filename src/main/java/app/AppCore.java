@@ -6,6 +6,7 @@ import database.MYSQLrepository;
 import database.settings.Settings;
 import database.settings.SettingsImplementation;
 import gui.table.TableModel;
+import gui.view.MyFrame;
 import lombok.Getter;
 import lombok.Setter;
 import observer.Notification;
@@ -53,12 +54,8 @@ public class AppCore extends PublisherImplementation {
     public void readDataFromTable(String fromTable){
 
         tableModel.setRows(this.database.readDataFromTable(fromTable));
-
+        MyFrame.getInstance().getTabelaPanel().setModel(tableModel);
         //Zasto ova linija moze da ostane zakomentarisana?
         this.notifySubscribers(new Notification(NotificationCode.DATA_UPDATED, this.getTableModel()));
     }
-
-
-
-
 }

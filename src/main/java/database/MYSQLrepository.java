@@ -72,8 +72,8 @@ public class MYSQLrepository implements Repository{
 
                 //Koje atribute imaja ova tabela?
 
-                    ResultSet columns = metaData.getColumns(connection.getCatalog(), null, tableName, null);
-                    //prvi argument je ime baze podataka, treci kaze da gleda samo tabele koje se zovu tableName
+                ResultSet columns = metaData.getColumns(connection.getCatalog(), null, tableName, null);
+                //prvi argument je ime baze podataka, treci kaze da gleda samo tabele koje se zovu tableName
 
                 while (columns.next()){//dok postoje sledece kolone
 
@@ -96,7 +96,7 @@ public class MYSQLrepository implements Repository{
                     Attribute attribute = new Attribute(columnName, newTable,
                             AttributeType.valueOf(
                                     Arrays.stream(columnType.toUpperCase().split(" "))
-                                    .collect(Collectors.joining("_"))),
+                                            .collect(Collectors.joining("_"))),
                             columnSize);
                     newTable.addChild(attribute);
                     //pravi objekat attribute kojem prosledjuje njgovo ime, roditelja (to ce biti Entity),
@@ -152,17 +152,25 @@ public class MYSQLrepository implements Repository{
             ResultSetMetaData resultSetMetaData = rs.getMetaData();
             //u resultSetMetaData dodeljuju se podatci u kolonama ime, tip podataka, velicina...
 
-            while (rs.next()){//dok postoji sledeca tabela
+            if (rs.next()) {
+                do {//dok postoji sledeca instanca
 
+                    Row row = new Row();//pravi objekat row
+                    row.setName(from);//u ime reda dodeljuje ime same kolone
+
+                    for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+                        row.addField(resultSetMetaData.getColumnName(i), rs.getString(i));
+                    }//dodeljuje polja u red
+                    rows.add(row);//u listu redova dodeljuje red
+                }while(rs.next());
+            }
+            else{
                 Row row = new Row();//pravi objekat row
                 row.setName(from);//u ime reda dodeljuje ime same kolone
-
-                for (int i = 1; i<=resultSetMetaData.getColumnCount(); i++){
-                    row.addField(resultSetMetaData.getColumnName(i), rs.getString(i));
+                for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+                    row.addField(resultSetMetaData.getColumnName(i), null);
                 }//dodeljuje polja u red
                 rows.add(row);//u listu redova dodeljuje red
-
-
             }
         }
         catch (Exception e) {

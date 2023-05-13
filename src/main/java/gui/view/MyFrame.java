@@ -1,6 +1,7 @@
 package gui.view;
 import app.AppCore;
 import gui.controller.ActionManager;
+import lombok.Getter;
 import observer.Notification;
 import observer.Subscriber;
 import tree.implementation.SelectionListener;
@@ -8,7 +9,7 @@ import tree.implementation.SelectionListener;
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
-
+@Getter
 public class MyFrame extends JFrame implements Subscriber{
     private AppCore appCore;
     private JTextPane tekstPanel;
@@ -16,6 +17,7 @@ public class MyFrame extends JFrame implements Subscriber{
     private JPanel goreDesno;
     private JPanel dugmiciPanel;
     private JPanel desniPanel;
+    private JPanel tp;
     private JSplitPane tekstIDugmici;
     private JTable tabelaPanel;
     private JScrollPane jsp;
@@ -65,15 +67,20 @@ public class MyFrame extends JFrame implements Subscriber{
 
         //panel za tabelu
         tabelaPanel = new JTable();
+        tabelaPanel.setPreferredScrollableViewportSize(new Dimension(1000, 400));
         tabelaPanel.setFillsViewportHeight(true);
-        this.add(new JScrollPane(tabelaPanel));
-        tabelaPanel.setPreferredSize(new Dimension(150, 150));
+        tp =new JPanel();
+        tp.add(tabelaPanel,BorderLayout.CENTER);
+        JScrollPane tb= new JScrollPane(tabelaPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        tp.add(tb);
+        tp.setLayout(new BoxLayout(tp,BoxLayout.X_AXIS));
+        //tabelaPanel.setPreferredSize(new Dimension(350, 150));
 
         //panel koji spaja tekst i dugmice sa tabelom
         desniPanel = new JPanel();
         desniPanel.setLayout(new BorderLayout());
         desniPanel.add(goreDesno, BorderLayout.NORTH);
-        desniPanel.add(tabelaPanel, BorderLayout.CENTER);
+        desniPanel.add(tp, BorderLayout.CENTER);
 
         this.setLayout(new BorderLayout());
         this.add(new JScrollPane(stabloPanel), BorderLayout.WEST);
