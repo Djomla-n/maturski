@@ -34,6 +34,7 @@ public enum Upiti {
     ASC,//
     DESC,//
     DISTINCT,//
-    ON;//
+    ON,//
+    COUNT;
 
 }
