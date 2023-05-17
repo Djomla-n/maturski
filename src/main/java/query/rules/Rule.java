@@ -1,5 +1,7 @@
 package query.rules;
 
+import java.sql.SQLException;
+
 public interface Rule {
-    public boolean check(String [] upit);
+    public boolean check(String [] upit) throws SQLException;
 }

@@ -4,6 +4,7 @@ import query.rules.Rule;
 import query.rules.RuleFactory;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -15,7 +16,7 @@ public class Checker implements Rule {
     }
 
     @Override
-    public boolean check(String [] upit) {
+    public boolean check(String [] upit) throws SQLException {
         for (Description x : Description.getRules()) {
             if (!ruleFactory.choseRule(x.getName(), upit)) {
                 errors.add(x);

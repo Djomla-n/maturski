@@ -77,7 +77,7 @@ public class AppCore extends PublisherImplementation {
         this.notifySubscribers(new Notification(NotificationCode.DATA_UPDATED, this.getTableModel()));
     }
 
-    public boolean proveriUpit(String [] upit){
+    public boolean proveriUpit(String [] upit) throws SQLException {
         return checker.check(upit);
     }
     public void posaljiUpit(String upit) throws SQLException {
