@@ -20,11 +20,6 @@
         "sgs": "Try to add quotes on start and on end of allias"
     }],
     "rule5": [{
-        "name": "RuleGroupBy",
-        "desc": "There is not GROUP BY in function of aggregation",
-        "sgs": "Try to add GROUP BY"
-    }],
-    "rule6": [{
         "name": "RuleWhere",
         "desc": "There is function of aggregation in WHERE part",
         "sgs": "Try to remove function of aggregation"
