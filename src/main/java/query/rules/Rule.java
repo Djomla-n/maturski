@@ -1,5 +1,5 @@
 package query.rules;
 
 public interface Rule {
-    public boolean check();
+    public boolean check(String [] upit);
 }

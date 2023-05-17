@@ -26,7 +26,7 @@ public class Description {
     public Description(){
     }
     public void loadJSON() throws IOException {
-        String jsonString = new String(Files.readAllBytes(Paths.get("C:\\Users\\mlade\\IdeaProjects\\maturski\\src\\main\\java\\resource\\pravila.json")));
+        String jsonString = new String(Files.readAllBytes(Paths.get("src/main/java/resource/pravila.json")));
 
         JSONObject jsonObject = new JSONObject(jsonString);
         rules = new ArrayList<>();

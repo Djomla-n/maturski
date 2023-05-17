@@ -3,6 +3,7 @@ package query;
 import query.rules.Rule;
 import query.rules.RuleFactory;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -14,9 +15,9 @@ public class Checker implements Rule {
     }
 
     @Override
-    public boolean check() {
+    public boolean check(String [] upit) {
         for (Description x : Description.getRules()) {
-            if (!ruleFactory.choseRule(x.getName())) {
+            if (!ruleFactory.choseRule(x.getName(), upit)) {
                 errors.add(x);
             }
         }
@@ -24,6 +25,9 @@ public class Checker implements Rule {
             return true;
         else//ispisi greske na ekran
         {
+            for(int i = 0;i<errors.size();i++) {
+                JOptionPane.showMessageDialog(null, errors.get(i).getDesc() + "\n" + errors.get(i).getSugg());
+            }
             errors.clear();
             return false;
         }

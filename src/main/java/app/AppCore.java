@@ -12,6 +12,7 @@ import lombok.Setter;
 import observer.Notification;
 import observer.enums.NotificationCode;
 import observer.implementation.PublisherImplementation;
+import query.Checker;
 import query.Description;
 import resource.data.Row;
 import resource.implementation.InformationResource;
@@ -19,7 +20,6 @@ import tree.Tree;
 import tree.implementation.TreeImplementation;
 import utils.Constants;
 
-import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.io.IOException;
 import java.sql.*;
@@ -36,6 +36,11 @@ public class AppCore extends PublisherImplementation {
     private DefaultTreeModel defaultTreeModel;
     private Tree tree;
     private Description description = new Description();
+
+    private MYSQLrepository rep;
+    private String[] niz;
+    List<Row> rows = new ArrayList<>();
+    private Checker checker = new Checker();
 
     public AppCore() {
         this.settings = initSettings();//u settings dodeljuje sve sto je potrebno za konekciju
@@ -72,9 +77,9 @@ public class AppCore extends PublisherImplementation {
         this.notifySubscribers(new Notification(NotificationCode.DATA_UPDATED, this.getTableModel()));
     }
 
-    private MYSQLrepository rep;
-    private String[] niz;
-    List<Row> rows = new ArrayList<>();
+    public boolean proveriUpit(String [] upit){
+        return checker.check(upit);
+    }
     public void posaljiUpit(String upit) throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:mysql://"+ Constants.MYSQL_IP +"/"+Constants.MYSQL_DATABASE
                 ,Constants.MYSQL_USERNAME,Constants.MYSQL_PASSWORD);

@@ -15,8 +15,10 @@ public class RunAction extends AbstractMaturskiAction{
     AppCore appCore = new AppCore();
     public void actionPerformed(ActionEvent e){
         String tekst = MyFrame.getInstance().getTekstPanel().getText();
+        String [] niz = tekst.split(" ");
         try {
-            appCore.posaljiUpit(tekst);
+            if(appCore.proveriUpit(niz))
+                appCore.posaljiUpit(tekst);
            // MyFrame.getInstance().getTekstPanel().setText("");
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
