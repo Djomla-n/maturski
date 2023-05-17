@@ -20,7 +20,6 @@ public class CommandManager {
             commands.remove(currentCommand);
         commands.add(command);
         doCommand();
-        System.out.println(commands.size());
     }
 
     public void doCommand(){

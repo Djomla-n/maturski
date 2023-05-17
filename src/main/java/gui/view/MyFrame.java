@@ -122,7 +122,6 @@ public class MyFrame extends JFrame implements Subscriber{
     }
 
     public MyFrame() {
-        System.out.println(13241);
         actionManager=new ActionManager();//dodaje novi ActionManager
         commandManager = new CommandManager();
     }
