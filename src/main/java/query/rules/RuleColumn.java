@@ -19,14 +19,12 @@ public class RuleColumn implements Rule{
         DatabaseMetaData metaData = connection.getMetaData();
         int i =0, brZareza = 0;
         Upiti[] sqlCommands = Upiti.values();
-        System.out.println("OVDE");
         while(!upit[i].equalsIgnoreCase("FROM")){
             i++;
             if(upit[i].contains(","))
                 brZareza++;
         }
 
-        System.out.println("OVDE2");
         String imeTabele = upit[i+1];
         ResultSet columns = metaData.getColumns(connection.getCatalog(), null, imeTabele , null);
 
@@ -43,7 +41,6 @@ public class RuleColumn implements Rule{
                 j++;
             }
         }
-        System.out.println("OVDE3");
         int brKolona=0;
         while(columns.next()){
             for(i = 0; i<upit.length; i++){
