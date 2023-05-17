@@ -1,6 +1,9 @@
 package gui.controller;
 
 import app.AppCore;
+import commands.CommandManager;
+import commands.Commands;
+import commands.implementation.RunCommand;
 import core.ApplicationFramework;
 import gui.view.MyFrame;
 import lombok.Getter;
@@ -15,10 +18,15 @@ public class RunAction extends AbstractMaturskiAction{
     AppCore appCore = new AppCore();
     public void actionPerformed(ActionEvent e){
         String tekst = MyFrame.getInstance().getTekstPanel().getText();
+        JTextPane jTextPane = MyFrame.getInstance().getTekstPanel();
         String [] niz = tekst.split(" ");
         try {
-            if(appCore.proveriUpit(niz))
+            if(appCore.proveriUpit(niz)) {
+                Commands command = new RunCommand(jTextPane);
+                ApplicationFramework.getInstance().getCommandManager().addCommand(command);
                 appCore.posaljiUpit(tekst);
+                MyFrame.getInstance().getTekstPanel().setText("");
+            }
            // MyFrame.getInstance().getTekstPanel().setText("");
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

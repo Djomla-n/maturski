@@ -1,5 +1,7 @@
 package gui.controller;
 
+import commands.Commands;
+import core.ApplicationFramework;
 import gui.view.MyFrame;
 import resource.enums.Upiti;
 
@@ -28,7 +30,7 @@ public class PrettyAction extends AbstractMaturskiAction{
         nizReciNorm = pocetan.getText().split("[\r\n ]");
         nizReciVelika=pocetan.getText().toUpperCase().split("[\r\n ]");
         if(pocetan.getText().isEmpty()) return;
-
+        String noPretty = pocetan.getText();
         pocetan.setText("");
 
         for (int i = 0; i < nizReciVelika.length; i++) {
@@ -55,7 +57,7 @@ public class PrettyAction extends AbstractMaturskiAction{
         for (int i = 0; i < nizReciNorm.length; i++) {
 
             if (nizReciNorm[i].matches(regex)) {
-                appendToPane(pocetan, nizReciNorm[i] + " ",Color.black );
+                appendToPane(pocetan, nizReciNorm[i] + " ", Color.black );
             }
 
             else if(nizReciVelika[i].equals("INNER") || nizReciVelika[i].equals("RIGHT") || nizReciVelika[i].equals("LEFT") || nizReciVelika[i].equals("OUTHER") && nizReciVelika[i+1].equals("JOIN")){
@@ -134,5 +136,4 @@ public class PrettyAction extends AbstractMaturskiAction{
         tp.setCharacterAttributes(vrati, false);
         //vraca boju u crnu
     }
-
 }

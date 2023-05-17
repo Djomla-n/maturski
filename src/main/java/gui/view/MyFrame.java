@@ -1,7 +1,9 @@
 package gui.view;
 import app.AppCore;
+import commands.CommandManager;
 import gui.controller.ActionManager;
 import lombok.Getter;
+import lombok.Setter;
 import observer.Notification;
 import observer.Subscriber;
 import tree.implementation.SelectionListener;
@@ -10,6 +12,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 @Getter
+@Setter
 public class MyFrame extends JFrame implements Subscriber{
     private AppCore appCore;
     private JTextPane tekstPanel;
@@ -21,11 +24,14 @@ public class MyFrame extends JFrame implements Subscriber{
     private JSplitPane tekstIDugmici;
     private JTable tabelaPanel;
     private JScrollPane jsp;
-    private JButton export;
+    private JButton undo;
+
+    private JButton redo;
     private JButton run;
     private JButton pretty;
     private ActionManager actionManager;
     private static MyFrame instance=null;
+    private CommandManager commandManager;
 
     public void pokreniGUI(){
         //panel za stablo
@@ -43,9 +49,13 @@ public class MyFrame extends JFrame implements Subscriber{
         pretty=new JButton("pretty");
         pretty.setFocusable(false);
         pretty.addActionListener(actionManager.getPrettyAction());
-        export=new JButton("export");
-        export.setFocusable(false);
-        export.addActionListener(actionManager.getExportAction());
+        undo=new JButton("undo");
+        undo.setFocusable(false);
+        undo.addActionListener(actionManager.getUndoAction());
+
+        redo=new JButton("redo");
+        redo.setFocusable(false);
+        redo.addActionListener(actionManager.getRedoAction());
 
         //panel za dugmice
         dugmiciPanel = new JPanel();
@@ -53,7 +63,8 @@ public class MyFrame extends JFrame implements Subscriber{
         dugmiciPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
         dugmiciPanel.add(run);
         dugmiciPanel.add(pretty);
-        dugmiciPanel.add(export);
+        dugmiciPanel.add(undo);
+        dugmiciPanel.add(redo);
         dugmiciPanel.setPreferredSize(new Dimension(100, 50));
 
         // panel koji spaja dugmice i tekst
@@ -111,7 +122,9 @@ public class MyFrame extends JFrame implements Subscriber{
     }
 
     public MyFrame() {
+        System.out.println(13241);
         actionManager=new ActionManager();//dodaje novi ActionManager
+        commandManager = new CommandManager();
     }
 
     public  JTextPane getTekstPanel() {
