@@ -14,9 +14,9 @@ public class PrettyAction extends AbstractMaturskiAction{
     private String[] nizReciNorm;
     //private String[] nizFunkcija={"SELECT", "FROM", "WHERE", "UPDATE", "AS", "OR", "IN"};
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
+        String regex = "^[!@#$%^&*()\\\\-_=+\\\\\\\\\\\\|\\\\[{\\\\]};:'\\\",<.>/?0-9]*$";
         Upiti[] funkcija = Upiti.values();
         String[] nizFunkcija = new String[funkcija.length];
 
@@ -31,13 +31,6 @@ public class PrettyAction extends AbstractMaturskiAction{
 
         pocetan.setText("");
 
-
-       /* while(nizReciNorm[0].equals("")){
-            nizReciNorm=pomeri(nizReciNorm, 0);
-            nizReciVelika=pomeri(nizReciVelika, 0);
-        }*/
-
-
         for (int i = 0; i < nizReciVelika.length; i++) {
             for (int j = 0; j < nizFunkcija.length; j++) {
                 if (nizReciVelika[i].equals(nizFunkcija[j]) ) {
@@ -46,7 +39,7 @@ public class PrettyAction extends AbstractMaturskiAction{
                     }
                     else {
                         if (i == 0 ) {
-                                nizReciNorm[i] = nizReciVelika[i];
+                            nizReciNorm[i] = nizReciVelika[i];
                         }
                         else {
                             nizReciNorm[i]= "\n" + nizReciVelika[i];
@@ -60,7 +53,12 @@ public class PrettyAction extends AbstractMaturskiAction{
             }
         }
         for (int i = 0; i < nizReciNorm.length; i++) {
-            if(nizReciVelika[i].equals("INNER") || nizReciVelika[i].equals("RIGHT") || nizReciVelika[i].equals("LEFT") || nizReciVelika[i].equals("OUTHER") && nizReciVelika[i+1].equals("JOIN")){
+
+            if (nizReciNorm[i].matches(regex)) {
+                appendToPane(pocetan, nizReciNorm[i] + " ",Color.black );
+            }
+
+            else if(nizReciVelika[i].equals("INNER") || nizReciVelika[i].equals("RIGHT") || nizReciVelika[i].equals("LEFT") || nizReciVelika[i].equals("OUTHER") && nizReciVelika[i+1].equals("JOIN")){
                 appendToPane(pocetan, "\n" + nizReciNorm[i].toUpperCase() + " "+ nizReciNorm[i+1].toUpperCase() + " ", Color.blue);
                 vrati(pocetan);
                 i++;
@@ -105,7 +103,7 @@ public class PrettyAction extends AbstractMaturskiAction{
     }
     public boolean proveri(String naredba){
         String[] niz={"IN","AS","OR", "BETWEEN","NOT", "EXIST", "LIKE", "SET", "DISTINCT", "ASC", "DESC", "ON",
-                };
+        };
         for (int i = 0; i < niz.length; i++) {
             if(naredba.equals(niz[i])) {
                 return true;
