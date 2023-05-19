@@ -20,25 +20,38 @@ public class RuleAlias implements Rule {
             br++;
         }
 
-
-        String imeTabele = upit[br];
+        String imeTabele = upit[br + 1];
         ResultSet columns = metaData.getColumns(connection.getCatalog(), null, imeTabele, null);
 
-        while (columns.next()) {
-            for (int i = 1; i < br; i++) {
-                for (int j = 0; j < br; j++) {
-                    String[] pom = upit[j].split("[ ,\"\n\t()]");
-                    System.out.println(pom[j]);
-                    if (!(pom[j].equals(columns.getString("COLUMN_NAME")) &&
-                            !pom[j - 1].equals(columns.getString("COLUMN_NAME")) ||
-                            !sqlCommands.toString().equalsIgnoreCase(pom[j - 1]))) {
-                        return false;
+        for (int i = 1; i < br; i++) {
+            while (columns.next()) {
+                String[] pom = upit[i].split("[ ,\n\t()]");
+                for (int k = 0; k < pom.length; k++) {
+                    while (pom[k].equals(columns.getString("COLUMN_NAME")) ||
+                            pom[k].equalsIgnoreCase(sqlCommands.toString())) {
+                        i++;
+                        pom = upit[i].split("[ ,\n\t()]");
                     }
+                }
+                System.out.println("cao");
+                if (upit[i].startsWith("\"")) {
+                    while (!upit[i].endsWith("\"")) {
+                        i++;
+                    }
+
+                    if (upit[i + 1].equalsIgnoreCase(sqlCommands.toString()) ||
+                            upit[i + 1].equals(columns.getString("COLUMN_NAME"))) {
+                        return true;
+                    }
+                } else if (upit[i + 1].equals(columns.getString("COLUMN_NAME")) ||
+                        upit[i + 1].equalsIgnoreCase(sqlCommands.toString())) {
+                    i = i + 2;
+                    System.out.println("cao");
+                    return true;
                 }
             }
         }
-
-        //SELECT nesto as nesto from autori
-        return true;
+        return false;
     }
 }
+

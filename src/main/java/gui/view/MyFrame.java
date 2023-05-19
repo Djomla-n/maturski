@@ -25,19 +25,22 @@ public class MyFrame extends JFrame implements Subscriber{
     private JTable tabelaPanel;
     private JScrollPane jsp;
     private JButton undo;
-
+    private JPanel donjiDugmici;
     private JButton redo;
     private JButton run;
     private JButton pretty;
+    private JPanel gornjiIDonjiDugmici;
     private ActionManager actionManager;
     private static MyFrame instance=null;
     private CommandManager commandManager;
+
 
     public void pokreniGUI(){
         //panel za stablo
         stabloPanel = new JTree();
         stabloPanel.setPreferredSize(new Dimension(150, 100));
         initialiseTree();
+
         //panel za tekst
         tekstPanel = new JTextPane();//tekstPane da bi tekst mogao da ide koliko god
         tekstPanel.setPreferredSize(new Dimension(450, 250));
@@ -52,24 +55,36 @@ public class MyFrame extends JFrame implements Subscriber{
         undo=new JButton("undo");
         undo.setFocusable(false);
         undo.addActionListener(actionManager.getUndoAction());
-
         redo=new JButton("redo");
         redo.setFocusable(false);
         redo.addActionListener(actionManager.getRedoAction());
 
         //panel za dugmice
         dugmiciPanel = new JPanel();
-        dugmiciPanel.setLayout(new GridLayout(3,1,10,10));
+        dugmiciPanel.setLayout(new GridLayout(2,1,10,10));
         dugmiciPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
         dugmiciPanel.add(run);
         dugmiciPanel.add(pretty);
-        dugmiciPanel.add(undo);
-        dugmiciPanel.add(redo);
-        dugmiciPanel.setPreferredSize(new Dimension(100, 50));
+        dugmiciPanel.setPreferredSize(new Dimension(70, 50));
+
+        donjiDugmici = new JPanel();
+        donjiDugmici.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+        donjiDugmici.add(undo);
+        donjiDugmici.add(redo);
+        donjiDugmici.setLayout(new  FlowLayout(FlowLayout.CENTER));
+        donjiDugmici.setPreferredSize(new Dimension(100, 50));
+
+        gornjiIDonjiDugmici = new JPanel();
+        gornjiIDonjiDugmici.setLayout(new BorderLayout());
+        gornjiIDonjiDugmici.add(dugmiciPanel, BorderLayout.CENTER);
+        gornjiIDonjiDugmici.add(donjiDugmici, BorderLayout.SOUTH);
+        gornjiIDonjiDugmici.setBorder(BorderFactory.createEmptyBorder(0, 0, 35, 0));
+        gornjiIDonjiDugmici.setPreferredSize(new Dimension(100,50));
+
 
         // panel koji spaja dugmice i tekst
         goreDesno = new JPanel();
-        tekstIDugmici = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,new JScrollPane(tekstPanel), dugmiciPanel);
+        tekstIDugmici = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,new JScrollPane(tekstPanel), gornjiIDonjiDugmici);
         tekstIDugmici.setResizeWeight(1.0);//da velicinu menja samo levi(da stoji 0.0 velicinu bi menjao samo desni)
         tekstIDugmici.setDividerLocation(600);
         goreDesno.setLayout(new BoxLayout(goreDesno, BoxLayout.X_AXIS));
