@@ -8,7 +8,7 @@ import java.sql.*;
 public class RuleAlias implements Rule {
     @Override
     public boolean check(String[] upit) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:mysql://" + Constants.MYSQL_IP + "/" + Constants.MYSQL_DATABASE
+        /*Connection connection = DriverManager.getConnection("jdbc:mysql://" + Constants.MYSQL_IP + "/" + Constants.MYSQL_DATABASE
                 , Constants.MYSQL_USERNAME, Constants.MYSQL_PASSWORD);
 
         DatabaseMetaData metaData = connection.getMetaData();//da mogu da vucem vrednosti sa baze
@@ -23,7 +23,25 @@ public class RuleAlias implements Rule {
         String imeTabele = upit[br + 1];
         ResultSet columns = metaData.getColumns(connection.getCatalog(), null, imeTabele, null);
 
-        for (int i = 1; i < br; i++) {
+        for (int i = 2; i < br; i++) {
+            if(upit[i].equalsIgnoreCase("AS")){
+                i++;
+                if(upit[i].startsWith("\"")){
+                    while(proveri(upit[i])){
+                        i++;
+                    }
+                    String[] pom = upit[i+1].split("[ ,\n\t()]");
+                    while (columns.next()) {
+                        if (pom[0].equals(columns.getString("COLUMN_NAME")) ||
+                                pom[0].equalsIgnoreCase("AS")){
+                            return true;
+                        }
+                    }
+                }
+            }
+
+        }*/
+        /*for (int i = 1; i < br; i++) {
             while (columns.next()) {
                 String[] pom = upit[i].split("[ ,\n\t()]");
                 for (int k = 0; k < pom.length; k++) {
@@ -50,8 +68,15 @@ public class RuleAlias implements Rule {
                     return true;
                 }
             }
+        }*/
+        return true;
+    }
+    public boolean proveri(String rec){
+        if(!rec.contains("\"")){
+            return true;
         }
-        return false;
+        else
+            return false;
     }
 }
 
