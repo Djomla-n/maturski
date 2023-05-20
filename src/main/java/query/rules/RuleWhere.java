@@ -16,18 +16,18 @@ public class RuleWhere implements Rule{
         DatabaseMetaData metaData = connection.getMetaData();
 
         int br=0;
-        while(!upit[br].equalsIgnoreCase("WHERE")) {
-            br++;
-        }
 
-        for (int i = br; i < upit.length; i++) {
-            String []pom = upit[i].split("[ ,\"\n\t()]");
-            System.out.println(pom[0]);
-            for (int j = 0; j < pom.length; j++) {
-                if(pom[j].equalsIgnoreCase("AS") || pom[j].equalsIgnoreCase("MIN") ||
-                        pom[j].equalsIgnoreCase("MAX") || pom[j].equalsIgnoreCase("COUNT") ||
-                        pom[j].equalsIgnoreCase("AVG") ){
-                    return false;
+        for (int i = 1; i < upit.length; i++) {
+            if(upit[i].equalsIgnoreCase("WHERE")){
+                for (int k = br; k < upit.length; k++) {
+                    String []pom = upit[k].split("[ ,\"\n\t()]");
+                    for (int j = 0; j < pom.length; j++) {
+                        if(pom[j].equalsIgnoreCase("AS") || pom[j].equalsIgnoreCase("MIN") ||
+                                pom[j].equalsIgnoreCase("MAX") || pom[j].equalsIgnoreCase("COUNT") ||
+                                pom[j].equalsIgnoreCase("AVG") || pom[j].equalsIgnoreCase("SUM")){
+                            return false;
+                        }
+                    }
                 }
             }
         }
