@@ -15,7 +15,8 @@ public class InformationResource extends DBNodeComposite {
 
     public InformationResource(String name) {
         super(name, null);
-    }//poziva konstruktore name i parent iz klase DBNodeComposite, s tim sto ime se dodeljuje prilikom
+    }
+    //poziva konstruktore name i parent iz klase DBNodeComposite, s tim sto ime se dodeljuje prilikom
     // pravljenja objekta ove klase, a parent se automatski stavlja na null jer ovo je glavni cvor (nema roditelja)
 
     @Override

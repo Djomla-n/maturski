@@ -86,7 +86,6 @@ public class AppCore extends PublisherImplementation {
         String pocetan = upit;
         niz= pocetan.split(" ");
         if(niz[0].equalsIgnoreCase("SELECT")){
-            String query = MyFrame.getInstance().getTekstPanel().toString();
             PreparedStatement preparedStatement = connection.prepareStatement(upit);
             ResultSet rs = preparedStatement.executeQuery();
             ResultSetMetaData resultSetMetaData = rs.getMetaData();

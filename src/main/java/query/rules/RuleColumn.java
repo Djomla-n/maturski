@@ -11,6 +11,7 @@ import java.util.List;
 public class RuleColumn implements Rule{
     @Override
     public boolean check(String [] upit) throws SQLException {
+
         if(upit[1].equalsIgnoreCase("*"))
             return true;
         Connection connection = DriverManager.getConnection("jdbc:mysql://"+ Constants.MYSQL_IP +"/"+Constants.MYSQL_DATABASE
@@ -24,7 +25,7 @@ public class RuleColumn implements Rule{
             if(upit[i].contains(","))
                 brZareza++;
         }
-
+        //select ime, COUNT(id) , id from autors
         String imeTabele = upit[i+1];
         ResultSet columns = metaData.getColumns(connection.getCatalog(), null, imeTabele , null);
 
@@ -52,9 +53,9 @@ public class RuleColumn implements Rule{
             }
         }
         if(brZareza == 0 && brKolona == 1)
-            return true;if(brZareza == 0)
+            return true;
+        if(brZareza == 0)
             brZareza++;
-
         if(brZareza + 1 == brKolona)
             return true;
         return false;

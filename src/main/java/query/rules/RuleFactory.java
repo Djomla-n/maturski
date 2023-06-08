@@ -11,9 +11,7 @@ public class RuleFactory {
 
     public boolean choseRule(String ime, String [] upit) throws SQLException {
         switch (ime){
-            case "RuleAlias": return ruleAlias.check(upit);
             case "RuleColumn" : return ruleColumn.check(upit);
-            case "RuleForeignKey": return ruleForeignKey.check(upit);
             case "RuleTable": return ruleTable.check(upit);
             case "RuleWhere": return ruleWhere.check(upit);
             default:return true;

@@ -158,7 +158,7 @@ public class MYSQLrepository implements Repository{
                 do {//dok postoji sledeca instanca
 
                     Row row = new Row();//pravi objekat row
-                    row.setName(from);//u ime reda dodeljuje ime same kolone
+                    //row.setName("CAO");//u ime reda dodeljuje ime same kolone
 
                     for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
                         row.addField(resultSetMetaData.getColumnName(i), rs.getString(i));

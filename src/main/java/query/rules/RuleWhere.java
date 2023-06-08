@@ -10,11 +10,6 @@ import java.sql.SQLException;
 public class RuleWhere implements Rule{
     @Override
     public boolean check(String [] upit) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:mysql://" + Constants.MYSQL_IP + "/" + Constants.MYSQL_DATABASE
-                , Constants.MYSQL_USERNAME, Constants.MYSQL_PASSWORD);
-
-        DatabaseMetaData metaData = connection.getMetaData();
-
         int br=0;
 
         for (int i = 1; i < upit.length; i++) {

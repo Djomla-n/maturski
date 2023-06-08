@@ -18,8 +18,10 @@ public class RunAction extends AbstractMaturskiAction{
     AppCore appCore = new AppCore();
     public void actionPerformed(ActionEvent e){
         String tekst = MyFrame.getInstance().getTekstPanel().getText();
+        tekst.toString();
+        System.out.println(tekst);
         JTextPane jTextPane = MyFrame.getInstance().getTekstPanel();
-        String [] niz = tekst.split(" ");
+        String [] niz = tekst.split(" \n\t");
         try {
             if(appCore.proveriUpit(niz)) {
                 Commands command = new RunCommand(jTextPane);
@@ -27,7 +29,6 @@ public class RunAction extends AbstractMaturskiAction{
                 appCore.posaljiUpit(tekst);
                 MyFrame.getInstance().getTekstPanel().setText("");
             }
-           // MyFrame.getInstance().getTekstPanel().setText("");
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }

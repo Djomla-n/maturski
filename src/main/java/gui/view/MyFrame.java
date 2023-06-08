@@ -47,7 +47,7 @@ public class MyFrame extends JFrame implements Subscriber{
         tekstPanel.add(Box.createHorizontalGlue());
 
         run=new JButton("run");
-        run.addActionListener(actionManager.getRunAction());//zbog klase abstractAction moze da radi addActionListener, koji dalje poziva samo dugme runAction
+        run.addActionListener(actionManager.getRunAction());            //zbog klase abstractAction moze da radi addActionListener, koji dalje poziva samo dugme runAction
         run.setFocusable(false);
         pretty=new JButton("pretty");
         pretty.setFocusable(false);

@@ -123,12 +123,12 @@ public class PrettyAction extends AbstractMaturskiAction{
 
 
     public static void appendToPane(JTextPane tp, String str, Color c) {
-        SimpleAttributeSet boja = new SimpleAttributeSet();//pravi novi SimpleAttributeSet koji u sebi moze da sadrzi font, boju...
-        StyleConstants.setForeground(boja, c);//u SimpleAttributeSet dodaje boju c
+        SimpleAttributeSet boja = new SimpleAttributeSet();                       //pravi novi SimpleAttributeSet koji u sebi moze da sadrzi font, boju...
+        StyleConstants.setForeground(boja, c);                                    //u SimpleAttributeSet dodaje boju c
         int duzina = tp.getDocument().getLength();
-        tp.setCaretPosition(duzina); // postavlja kursor na kraj kako bi tekst koji sledeci dodaje bio na kraju
-        tp.setCharacterAttributes(boja, false); // u tekst panel posavlja boju
-        tp.replaceSelection(str); // dodaje samo obojeni tekst
+        tp.setCaretPosition(duzina);                                                   // postavlja kursor na kraj kako bi tekst koji sledeci dodaje bio na kraju
+        tp.setCharacterAttributes(boja, false);                             // u tekst panel posavlja boju
+        tp.replaceSelection(str);                                            // dodaje samo obojeni tekst
     }
     public void vrati(JTextPane tp){
         SimpleAttributeSet vrati = new SimpleAttributeSet();
