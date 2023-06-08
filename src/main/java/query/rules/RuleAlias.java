@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class RuleAlias implements Rule {
     @Override
-    public boolean check(String[] upit) throws SQLException {
+    public boolean check(String upit) throws SQLException {
        /*Connection connection = DriverManager.getConnection("jdbc:mysql://" + Constants.MYSQL_IP + "/" + Constants.MYSQL_DATABASE
                 , Constants.MYSQL_USERNAME, Constants.MYSQL_PASSWORD);
 

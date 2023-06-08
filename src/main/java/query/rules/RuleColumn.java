@@ -10,7 +10,8 @@ import java.util.List;
 
 public class RuleColumn implements Rule{
     @Override
-    public boolean check(String [] upit) throws SQLException {
+    public boolean check(String upit1) throws SQLException {
+        String [] upit = upit1.split(" ");
 
         if(upit[1].equalsIgnoreCase("*"))
             return true;

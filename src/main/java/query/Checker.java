@@ -16,7 +16,7 @@ public class Checker implements Rule {
     }
 
     @Override
-    public boolean check(String [] upit) throws SQLException {
+    public boolean check(String upit) throws SQLException {
         for (Description x : Description.getRules()) {
             if (!ruleFactory.choseRule(x.getName(), upit)) {
                 errors.add(x);

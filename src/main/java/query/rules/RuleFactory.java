@@ -9,10 +9,10 @@ public class RuleFactory {
     private RuleTable ruleTable= new RuleTable();
     private RuleWhere ruleWhere= new RuleWhere();
 
-    public boolean choseRule(String ime, String [] upit) throws SQLException {
+    public boolean choseRule(String ime, String upit) throws SQLException {
         switch (ime){
-            case "RuleColumn" : return ruleColumn.check(upit);
             case "RuleTable": return ruleTable.check(upit);
+            case "RuleColumn" : return ruleColumn.check(upit);
             case "RuleWhere": return ruleWhere.check(upit);
             default:return true;
         }

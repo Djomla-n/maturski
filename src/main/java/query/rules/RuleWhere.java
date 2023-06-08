@@ -9,9 +9,9 @@ import java.sql.SQLException;
 
 public class RuleWhere implements Rule{
     @Override
-    public boolean check(String [] upit) throws SQLException {
+    public boolean check(String upit1) throws SQLException {
         int br=0;
-
+        String [] upit = upit1.split(" ");
         for (int i = 1; i < upit.length; i++) {
             if(upit[i].equalsIgnoreCase("WHERE")){
                 for (int k = br; k < upit.length; k++) {

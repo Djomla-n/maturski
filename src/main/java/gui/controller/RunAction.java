@@ -19,11 +19,10 @@ public class RunAction extends AbstractMaturskiAction{
     public void actionPerformed(ActionEvent e){
         String tekst = MyFrame.getInstance().getTekstPanel().getText();
         tekst.toString();
-        System.out.println(tekst);
         JTextPane jTextPane = MyFrame.getInstance().getTekstPanel();
-        String [] niz = tekst.split(" \n\t");
+        //String [] niz = tekst.split(" \t\n");
         try {
-            if(appCore.proveriUpit(niz)) {
+            if(appCore.proveriUpit(tekst)) {
                 Commands command = new RunCommand(jTextPane);
                 ApplicationFramework.getInstance().getCommandManager().addCommand(command);
                 appCore.posaljiUpit(tekst);
