@@ -32,7 +32,6 @@ public class MYSQLrepository implements Repository{
         String database = (String) settings.getParameter("mysql_database");
         String username = (String) settings.getParameter("mysql_username");
         String password = (String) settings.getParameter("mysql_password");
-        //Class.forName("net.sourceforge.jtds.jdbc.Driver");//koristi se za ucitavanje jdbc drivera ali ne mora da se pise jer je uzitan u maven fajlu
         connection = DriverManager.getConnection("jdbc:mysql://"+ip+"/"+database,username,password);
     }//konekcija sa bazom uzima vrednoste iz Constants
 
@@ -72,8 +71,6 @@ public class MYSQLrepository implements Repository{
                 Entity newTable = new Entity(tableName, ir);//pravi cvor (ime cvora je tableName a njen roditelj je Matusrski (glavni cvor)
                 ir.addChild(newTable);//dodaje taj cvor
 
-                //Koje atribute imaja ova tabela?
-
                 ResultSet columns = metaData.getColumns(connection.getCatalog(), null, tableName, null);
                 //prvi argument je ime baze podataka, treci kaze da gleda samo tabele koje se zovu tableName
 
@@ -84,16 +81,8 @@ public class MYSQLrepository implements Repository{
                     String columnName = columns.getString("COLUMN_NAME");//u columnName dodeljuje ime kolone
                     String columnType = columns.getString("TYPE_NAME");//u columnType dodeljuje ime tipa kolone
 
-                    //System.out.println(columnType);//ispisuje tip kolone
 
                     int columnSize = Integer.parseInt(columns.getString("COLUMN_SIZE"));//u columnSize dodeljuje velicinu same kolone
-
-//                    ResultSet pkeys = metaData.getPrimaryKeys(connection.getCatalog(), null, tableName);
-//
-//                    while (pkeys.next()){
-//                        String pkColumnName = pkeys.getString("COLUMN_NAME");
-//                    }
-
 
                     Attribute attribute = new Attribute(columnName, newTable,
                             AttributeType.valueOf(
@@ -155,7 +144,7 @@ public class MYSQLrepository implements Repository{
             //u resultSetMetaData dodeljuju se podatci u kolonama ime, tip podataka, velicina...
 
             if (rs.next()) {
-                do {//dok postoji sledeca instanca
+                do {//dok postoji sledeci red
 
                     Row row = new Row();//pravi objekat row
                     //row.setName("CAO");//u ime reda dodeljuje ime same kolone
@@ -168,7 +157,7 @@ public class MYSQLrepository implements Repository{
             }
             else{
                 Row row = new Row();//pravi objekat row
-                row.setName(from);//u ime reda dodeljuje ime same kolone
+                row.setName(from);//u ime reda dodeljuje ime tabele
                 for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
                     row.addField(resultSetMetaData.getColumnName(i), null);
                 }//dodeljuje polja u red

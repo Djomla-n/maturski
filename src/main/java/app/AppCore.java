@@ -73,8 +73,6 @@ public class AppCore extends PublisherImplementation {
 
         tableModel.setRows(this.database.readDataFromTable(fromTable));
         MyFrame.getInstance().getTabelaPanel().setModel(tableModel);
-        //Zasto ova linija moze da ostane zakomentarisana?
-        this.notifySubscribers(new Notification(NotificationCode.DATA_UPDATED, this.getTableModel()));
     }
 
     public boolean proveriUpit(String upit) throws SQLException {

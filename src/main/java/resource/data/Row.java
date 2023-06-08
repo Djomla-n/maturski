@@ -21,8 +21,4 @@ public class Row {
         this.fields.put(fieldName, value);
     }//u polje upisuje njegovu vrednost i njegovo ime
 
-    public void removeField(String fieldName) {
-        this.fields.remove(fieldName);
-    }
-
 }
